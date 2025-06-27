@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Key của bạn</title>
+  <style>
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      color: #333;
+    }
+
+    .container {
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      max-width: 400px;
+      width: 90%;
+    }
+
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    #keyBox {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: 20px 0;
+      word-break: break-word;
+      color: #2d2d2d;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    #copyMsg {
+      margin-top: 10px;
+      font-size: 0.9rem;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔑 Key của bạn</h1>
+    <div id="keyBox">Đang tải...</div>
+    <button id="copyBtn" disabled>Sao chép key</button>
+    <div id="copyMsg"></div>
+  </div>
+
+  <script>
+    const keyBox = document.getElementById("keyBox");
+    const copyBtn = document.getElementById("copyBtn");
+    const copyMsg = document.getElementById("copyMsg");
+
+    // Lấy tham số từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const key = urlParams.get("key");
+
+    if (key) {
+      keyBox.textContent = key;
+      copyBtn.disabled = false;
+    } else {
+      keyBox.textContent = "❌ Không tìm thấy key trên URL.";
+    }
+
+    copyBtn.addEventListener("click", () => {
+      navigator.clipboard.writeText(keyBox.textContent).then(() => {
+        copyMsg.textContent = "✅ Đã sao chép vào clipboard!";
+      }).catch(() => {
+        copyMsg.textContent = "❌ Sao chép thất bại!";
+      });
+    });
+  </script>
+</body>
+</html>
